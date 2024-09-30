@@ -37,5 +37,5 @@ To run this project locally, ensure that you have Flutter installed and set up. 
    - Download the google-services.json file and place it in your android/app directory.
    - Run the App: Run the following command to launch the app in debug mode on an emulator or connected device:
 
-  ```bash
-  flutter run
+     ```bash
+     flutter run
