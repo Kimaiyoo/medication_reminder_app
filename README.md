@@ -31,11 +31,9 @@ To run this project locally, ensure that you have Flutter installed and set up. 
    ```bash
    flutter pub get
 4. **Configure Firebase**:
-
-5. **Create a Firebase project via the Firebase Console.**
+   - Create a Firebase project via the Firebase Console.**
    - Add an Android app using the package name com.myhealthapp.medicationreminderapp.
    - Download the google-services.json file and place it in your android/app directory.
-   - Run the App: Run the following command to launch the app in debug mode on an emulator or connected device:
-
+5. Run the App: Run the following command to launch the app in debug mode on an emulator or connected device:
      ```bash
      flutter run
