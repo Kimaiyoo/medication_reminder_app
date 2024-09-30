@@ -22,18 +22,23 @@ To run this project locally, ensure that you have Flutter installed and set up. 
 ### Steps to run the project:
 
 1. **Clone the Repository**:
+   
    ```bash
    git clone https://github.com/your-username/medication_reminder_app.git
 2. **Navigate to the project directory**:
+   
    ```bash
    cd medication_reminder_app
 3. **Install the Dependencies: Run the following command to install all the required Flutter dependencies**:
+   
    ```bash
    flutter pub get
 4. **Configure Firebase**:
+   
    - Create a Firebase project via the Firebase Console.**
    - Add an Android app using the package name com.myhealthapp.medicationreminderapp.
    - Download the google-services.json file and place it in your android/app directory.
 5. Run the App: Run the following command to launch the app in debug mode on an emulator or connected device:
+   
      ```bash
      flutter run
