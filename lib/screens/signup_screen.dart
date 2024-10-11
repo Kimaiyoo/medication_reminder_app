@@ -52,11 +52,10 @@ class _SignupScreenState extends State<SignupScreen> {
       final user = await AuthService().signUpWithEmail(
         email: _emailController.text,
         password: _passwordController.text,
+        fullName: _fullNameController.text, // Full name added
         onError: (errorMessage) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(errorMessage),
-            ),
+            SnackBar(content: Text(errorMessage)),
           );
         },
       );

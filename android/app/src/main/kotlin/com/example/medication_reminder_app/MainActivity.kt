@@ -1,4 +1,4 @@
-package com.example.medication_reminder_app
+package com.myhealthapp.medicationreminderapp
 
 import io.flutter.embedding.android.FlutterActivity
 

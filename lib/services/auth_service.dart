@@ -1,12 +1,16 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // Signup with email and password
   Future<User?> signUpWithEmail({
     required String email,
     required String password,
+    required String fullName,
     required Function(String) onError,
   }) async {
     try {
@@ -15,7 +19,18 @@ class AuthService {
         email: email,
         password: password,
       );
-      return userCredential.user;
+      final User? user = userCredential.user;
+
+      // Add user data to Firestore
+      if (user != null) {
+        await _firestore.collection('users').doc(user.uid).set({
+          'fullName': fullName,
+          'email': email,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+      }
+
+      return user;
     } on FirebaseAuthException catch (e) {
       log("Signup failed: $e");
       if (e.code == 'email-already-in-use') {
@@ -33,6 +48,7 @@ class AuthService {
     }
   }
 
+  // Sign in with email and password
   Future<User?> signInWithEmail({
     required String email,
     required String password,
@@ -62,9 +78,10 @@ class AuthService {
     }
   }
 
+  // Sign out
   Future<void> signOut() async {
     try {
-      await _auth.signOut(); // Also sign out from Google
+      await _auth.signOut();
     } catch (e) {
       log("Sign-out failed: $e");
     }
