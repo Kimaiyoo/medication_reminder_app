@@ -26,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = true;
       });
 
-      // Include the onError parameter here
       final user = await _auth.signInWithEmail(
         email: _emailController.text,
         password: _passwordController.text,
@@ -39,7 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = false;
       });
 
-      // Check if user is null to determine if sign-in failed
       if (user == null) {
         _showSnackBar('Login failed. Please try again.');
       }
@@ -143,38 +141,44 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: rememberPassword,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    rememberPassword = value!;
-                                  });
-                                },
-                                activeColor: lightColorScheme.primary,
-                              ),
-                              const Text(
-                                'Remember me',
-                                style: TextStyle(color: Colors.black45),
-                              ),
-                            ],
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ForgotPasswordScreen(),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                  value: rememberPassword,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      rememberPassword = value!;
+                                    });
+                                  },
+                                  activeColor: lightColorScheme.primary,
                                 ),
-                              );
-                            },
-                            child: Text(
-                              'Forgot Password?',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: lightColorScheme.primary,
+                                const Expanded(
+                                  child: Text(
+                                    'Remember me',
+                                    style: TextStyle(color: Colors.black45),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Flexible(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ForgotPasswordScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Forgot Password?',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: lightColorScheme.primary,
+                                ),
                               ),
                             ),
                           ),
@@ -214,7 +218,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 25.0),
                       const SizedBox(height: 25.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

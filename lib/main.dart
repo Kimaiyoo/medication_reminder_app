@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:medication_reminder_app/firebase_options.dart';
+import 'package:medication_reminder_app/services/notification_service.dart';
 import 'package:medication_reminder_app/theme.dart';
 import 'package:medication_reminder_app/wrapper.dart';
 
@@ -9,6 +10,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  NotificationService notificationService = NotificationService();
+  await notificationService.initializeNotifications();
   runApp(const MyApp());
 }
 
