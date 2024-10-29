@@ -6,6 +6,10 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  void setLanguageToEnglish() {
+    _auth.setLanguageCode('en');
+  }
+
   // Signup with email and password
   Future<User?> signUpWithEmail({
     required String email,
@@ -13,6 +17,7 @@ class AuthService {
     required String fullName,
     required Function(String) onError,
   }) async {
+    setLanguageToEnglish();
     try {
       final UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
@@ -54,6 +59,7 @@ class AuthService {
     required String password,
     required Function(String) onError,
   }) async {
+    setLanguageToEnglish();
     try {
       final UserCredential userCredential =
           await _auth.signInWithEmailAndPassword(
@@ -62,17 +68,29 @@ class AuthService {
       );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      log("Login failed: $e");
-      if (e.code == 'user-not-found') {
-        onError("No user found with this email.");
-      } else if (e.code == 'wrong-password') {
-        onError("Incorrect password.");
-      } else {
-        onError(e.message ?? "An unknown error occurred.");
+      log("Login failed: ${e.code}");
+      switch (e.code) {
+        case 'user-not-found':
+          onError("No user found with this email.");
+          break;
+        case 'wrong-password':
+          onError("Incorrect password.");
+          break;
+        case 'invalid-email':
+          onError("Invalid email format.");
+          break;
+        case 'user-disabled':
+          onError("This account has been disabled.");
+          break;
+        case 'too-many-requests':
+          onError("Too many attempts. Try again later.");
+          break;
+        default:
+          onError("An unknown error occurred. Please try again.");
       }
       return null;
     } catch (e) {
-      log("Unknown login error: $e");
+      log("Unknown login error", error: e, stackTrace: StackTrace.current);
       onError("An unknown error occurred.");
       return null;
     }
